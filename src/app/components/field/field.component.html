@@ -1,0 +1,14 @@
+<div class="field-holder" [ngClass]="playable ? '': 'low'">
+
+    <div class="winner" [ngClass]="winner != '' ? 'show' : 'hide'">
+        {{winner}}
+    </div>
+
+    <div *ngFor="let fieldRow of fieldMap; index as i" class="row">
+        <div *ngFor="let field of fieldRow; index as j" class="col sqr playable" [ngClass]="'sqr' + i + j"
+            [id]="'sqr'  + i + j" (click)="mark(i,j)">
+            {{field}}
+        </div>
+    </div>
+
+</div>

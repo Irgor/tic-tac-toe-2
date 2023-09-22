@@ -1,0 +1,10 @@
+<!-- <div class="next-move">
+    {{nextMove}}
+</div> -->
+<div class="field-holder">
+    <div *ngFor="let fieldRow of fieldMap; index as i" class="col">
+        <div *ngFor="let field of fieldRow; index as j" class="row sqr">
+            <app-field [i]="i" [j]="j" [player]="player"></app-field>
+        <div>
+    </div>
+</div>
