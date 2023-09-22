@@ -7,7 +7,7 @@ import { GameComponent } from './pages/game/game.component';
 import { FieldComponent } from './components/field/field.component';
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+const config: SocketIoConfig = { url: 'wss://tic-tac-toe-2-api.onrender.com', options: {} };
 
 @NgModule({
   declarations: [
