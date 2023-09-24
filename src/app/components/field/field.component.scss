@@ -1,13 +1,10 @@
-$border: 2px solid black;
-
 .field-holder {
-    font-family: 'Nunito', sans-serif;
     display: flex;
     flex-direction: row;
     width: max-content;
     justify-content: center;
     align-items: center;
-    margin: 10px;
+    padding: 10px;
     position: relative;
 }
 
@@ -15,6 +12,10 @@ $border: 2px solid black;
     position: absolute;
     font-size: 12rem;
     user-select: none;
+
+    @media screen and (max-width: 800px) {
+        font-size: 7rem;
+    }
 }
 
 .hide {
@@ -25,9 +26,6 @@ $border: 2px solid black;
     display: block;
 }
 
-.low {
-    background-color: rgb(128, 128, 128, .4);
-}
 
 .sqr {
     height: 60px;
@@ -40,38 +38,26 @@ $border: 2px solid black;
     padding: 6px;
     box-sizing: border-box;
     cursor: pointer;
+    transition: all .2s;
+
+    @media screen and (max-width: 800px) {
+        width: 30px;
+        height: 30px;
+    }
 }
 
-
-//bordas
-.sqr00 {
-    border-right: $border;
-    border-bottom: $border;
+.playable {
+    .sqr {
+        border-width: 3px;
+        border-color: cornflowerblue;
+    }
 }
 
-.sqr01 {
-    border-right: $border;
-    border-bottom: $border;
-}
+.low {
+    opacity: .5;
 
-.sqr02 {
-    border-right: $border;
-}
-
-.sqr10,
-.sqr11 {
-    border-bottom: $border;
-    border-right: $border;
-}
-
-.sqr12 {
-    border-right: $border;
-}
-
-.sqr20 {
-    border-bottom: $border;
-}
-
-.sqr21 {
-    border-bottom: $border;
+    .sqr {
+        border-color: gray;
+        border-width: 1px;
+    }
 }

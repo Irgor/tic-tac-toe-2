@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Input } from '@angular/core'
-import { MovesControllService } from 'src/app/services/moves-controll.service';
+import { MovesControllService } from 'src/app/services/moves/moves-controll.service';
 import { Subscription } from 'rxjs'
-import { SocketService } from 'src/app/services/socket.service';
-
+import { SocketService } from 'src/app/services/socket/socket.service';
 @Component({
   selector: 'app-field',
   templateUrl: './field.component.html',
@@ -21,7 +20,7 @@ export class FieldComponent implements OnInit {
 
   constructor(
     private movesControll: MovesControllService,
-    private socket: SocketService
+    private socket: SocketService,
   ) { }
 
   fieldMap = [
@@ -48,29 +47,36 @@ export class FieldComponent implements OnInit {
       }
     })
 
-    this.socket.getGameOnBoard().subscribe(move => {
+    this.socket.getGameOnBoard().subscribe(header => {
+      const move = header.data;
       this.checkPlayable(move);
     });
 
-    this.socket.getMoveMarked().subscribe(move => {
+    this.socket.getMoveMarked().subscribe(header => {
+      const move = header.data;
       if (this.i == move.i && this.j == move.j) {
         this.fieldMap[move.mi][move.mj] = move.player;
       }
+      this.checkWin();
+      this.checkDraw();
     })
   }
 
   checkPlayable(move: any) {
-    if (move.all && !this.win) {
+    if (move.all && !this.win && move.mover != this.player) {
+      console.log(move);
       this.playable = true;
       return;
     }
 
-    if(move.lastPlayer == this.player || move.mover == this.player) {
+    if (move.lastPlayer == this.player || move.mover == this.player) {
       this.playable = false;
       return;
     }
 
-    this.playable = this.i == move.i && this.j == move.j
+    this.playable = this.i == move.i && this.j == move.j;
+    this.checkDraw();
+    this.checkWin();
   }
 
   mark(i: number, j: number) {
@@ -106,8 +112,8 @@ export class FieldComponent implements OnInit {
   }
 
   checkDraw() {
-    this.marks++;
-    if (this.marks == 9 && this.win == false) {
+    const marks = this.fieldMap.flat().join('').trim().length;
+    if (marks == 9 && this.win == false) {
       this.setWin('/');
     }
   }

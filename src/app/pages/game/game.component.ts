@@ -1,7 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { MovesControllService } from 'src/app/services/moves-controll.service';
-import { SocketService } from 'src/app/services/socket.service';
+import { MatchService } from 'src/app/services/match/match.service';
+import { MovesControllService } from 'src/app/services/moves/moves-controll.service';
+import { SocketService } from 'src/app/services/socket/socket.service';
+
 
 @Component({
   selector: 'app-game',
@@ -28,11 +31,18 @@ export class GameComponent implements OnInit, OnDestroy {
   moveSub?: Subscription;
 
   player = 'X';
+  win = false;
 
   constructor(
     private moveControll: MovesControllService,
-    private socket: SocketService
+    private socket: SocketService,
+    private match: MatchService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.match.matchId = id!;
+
     this.moveControll.endedGames.next([]);
     this.socket.listenMoves();
   }
@@ -55,14 +65,16 @@ export class GameComponent implements OnInit, OnDestroy {
       }
     })
 
-    this.socket.getPlayer().subscribe(player => {
+    this.socket.getPlayer().subscribe(header => {
+      const player = header.data;
       this.player = player
     })
   }
 
   checkDraw() {
-    if (this.endedGames.length == 9) {
-      this.endGame('DEU VELHA VELHA')
+    const marks = this.controllField.flat().join('').trim().length;
+    if (marks == 9 && this.win == false) {
+      this.endGame('DEU VELHA VELHA');
     }
   }
 

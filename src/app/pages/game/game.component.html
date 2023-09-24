@@ -3,8 +3,12 @@
 </div> -->
 <div class="field-holder">
     <div *ngFor="let fieldRow of fieldMap; index as i" class="col">
-        <div *ngFor="let field of fieldRow; index as j" class="row sqr">
+        <div *ngFor="let field of fieldRow; index as j" class="row sqr" [ngClass]="'sqr' + i + j">
             <app-field [i]="i" [j]="j" [player]="player"></app-field>
-        <div>
+        </div>
     </div>
+</div>
+
+<div class="next-move">
+    {{ player }}
 </div>

@@ -1,1 +1,37 @@
-/* You can add global styles to this file, and also import other style files */
+$border: 2px solid black;
+
+* {
+    font-family: 'Nunito', sans-serif;
+}
+
+.sqr00 {
+    border-right: $border;
+    border-bottom: $border;
+}
+
+.sqr01 {
+    border-right: $border;
+    border-bottom: $border;
+}
+
+.sqr02 {
+    border-right: $border;
+}
+
+.sqr10,
+.sqr11 {
+    border-bottom: $border;
+    border-right: $border;
+}
+
+.sqr12 {
+    border-right: $border;
+}
+
+.sqr20 {
+    border-bottom: $border;
+}
+
+.sqr21 {
+    border-bottom: $border;
+}
